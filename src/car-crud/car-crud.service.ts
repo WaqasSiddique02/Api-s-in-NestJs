@@ -8,7 +8,8 @@ export class CarCrudService {
   constructor(private readonly connection:Connection){}
 
   create(createCarCrudDto: CreateCarCrudDto) {
-    this.connection.query( `INSERT INTO car (make,model,year) VALUES('${createCarCrudDto.make}','${createCarCrudDto.model}','${createCarCrudDto.year}')`)
+    this.connection.query( `INSERT INTO car (make,model,year) VALUES('${createCarCrudDto.make}','${createCarCrudDto.model}',${createCarCrudDto.year})`);
+    return 'Car created!';
   }
 
   findAll() {
@@ -22,10 +23,12 @@ export class CarCrudService {
   }
 
   update(id: number, updateCarCrudDto: UpdateCarCrudDto) {
-    return `This action updates a #${id} carCrud`;
+    this.connection.query(`UPDATE car set make='${updateCarCrudDto.make}',model='${updateCarCrudDto.model}',year=${updateCarCrudDto.year} WHERE id=${id}`);
+    return 'Car updated!';
   }
 
   remove(id: number) {
-    return `This action removes a #${id} carCrud`;
+    this.connection.query(`DELETE FROM car WHERE id=${id}`);
+    return "Car deleted";
   }
 }

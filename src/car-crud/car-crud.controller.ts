@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { CarCrudService } from './car-crud.service';
 import { CreateCarCrudDto } from './dto/create-car-crud.dto';
 import { UpdateCarCrudDto } from './dto/update-car-crud.dto';
@@ -20,17 +20,17 @@ export class CarCrudController {
   }
 
   @Get('findOne/:id')
-  findOne(@Param('id') id: string) {
-    return this.carCrudService.findOne(+id);
+  findOne(@Param('id',ParseIntPipe) id: number) {
+    return this.carCrudService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCarCrudDto: UpdateCarCrudDto) {
-    return this.carCrudService.update(+id, updateCarCrudDto);
+  update(@Param('id',ParseIntPipe) id: number, @Body() updateCarCrudDto: UpdateCarCrudDto) {
+    return this.carCrudService.update(id, updateCarCrudDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.carCrudService.remove(+id);
+  remove(@Param('id',ParseIntPipe) id: number) {
+    return this.carCrudService.remove(id);
   }
 }
